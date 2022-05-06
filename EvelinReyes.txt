@@ -1,0 +1,94 @@
+@startuml
+
+title Plataforma de Aprendizaje
+
+
+class Persona {
+  #String nombre
+  #String dirección
+  #String teléfono
+  #String alias
+  #String email
+}
+class Alumno {
+  - float notaMedia
+  + getNotaMedia(): float
+  + setNotaMedia(float nuevaNota): void
+  + emitirCertificado():void
+  + calcularNotaMedia():float
+}
+
+Persona <|-- Alumno
+
+class Profesor{
+  - String NRP
+  + getNRP(): String
+  + setNRP (String nuevoNRP): a
+}
+
+Persona <|-- Profesor
+
+class Módulo{
+  - String nombre
+  - int duracion
+  - String contenidos
+  + getNombre():String
+  + setNombre(String nuevoNombre):void
+  + getDuración():String
+  + setDuración(String nuevaDuración):void
+  + getContenidos():String
+  + setContenidos(String nuevosContenidos):void
+}
+Alumno "0..*" -- "1..*" Módulo: se matricula en
+
+Profesor "1" -- "1..*" Módulo: imparte
+
+class Competencia{
+  - String descripcion
+  + getDescripción(): String
+  + setDescriptión(String nuevaDescripción): void
+}
+Módulo "1" --* "1..*" Competencia: compuesto por
+
+class Examen{
+  + calificar(): double
+  + anadirPregunta()
+  + ordenarPreguntas()
+  + crearExamen()
+}
+Módulo "1" *-- "1" Examen: tiene
+
+class Tarea{
+  - String descripcion
+  + getDescripción(): String
+  + setDescriptión(String nuevaDescripción): void
+}
+Módulo "1" *-- "1" Tarea: tiene
+
+class CicloFormativo{
+  - String nombre
+  - String descripcion
+  - int horas
+  + getNombre():String
+  + setNombre(String nuevoNombre):void
+  + getDescripción(): String
+  + setDescriptión(String nuevaDescripción): void
+  + getHoras(): int
+  + setHoras(int nuevasHoras): void
+}
+Competencia "1..*" --* "1" CicloFormativo: compuesto por
+
+class Pregunta{
+  - String enunciado
+  - String[] respuestas
+  - int respuestaValida
+  + getEnunciado(): String
+  + setEnunciado(String nuevoEnunciado):void 
+  + getRespuestas(): String[]
+  + setRespuestas(String []):void
+  + getRespuestaValida(): int
+  + setRespuestaValida(int r):void 
+}
+Examen "0..*" o-- "30" Pregunta: se compone de
+
+@enduml
